@@ -1,111 +1,169 @@
-
-import ProgramChoice from "../components/program/ProgramChoice";
-import { useEffect, useState } from "react";
-import ExerciseForm from "../components/exercise/exerciseForm";
-import ProgramForm from "../components/program/programForm";
-import WorkoutForm from "../components/workout/workoutForm";
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { getAllExercisesAsync } from "../ReduxParts/exercise/exerciseSlice";
+import { useNavigate } from "react-router";
+import GoalFormAdd from "../forms/goal/GoalFormAdd";
+import GoalItem from "../forms/goal/GoalItem";
+import keycloak from "../keycloak";
+import { fetchExercises } from "../reduxParts/reducers/exerciseSlice";
+import { fetchGoals, selectGoalById } from "../reduxParts/reducers/goalSlice";
+import { fetchProfiles, selectProfileById } from "../reduxParts/reducers/profileSlice";
+import { fetchPrograms } from "../reduxParts/reducers/programSlice";
+import { fetchWorkouts } from "../reduxParts/reducers/workoutSlice";
+
+
+
 
 
 
 
 const Profile = () =>{
+
+    const navigate = useNavigate()
     const dispatch = useDispatch();
+    const profileId = 1;
+    const goalId=1;
+    const {goal:goalSelected,status:statusGoal,goals} = useSelector(state=>{
+        console.log(state.goal);
+        return state.goal})
+    const {exercises:exercisesFetched, status:statusExercises} = useSelector((state)=>state.exercise);
+    const {workouts:workoutsFetched, status:statusWorkouts} = useSelector((state)=>state.workout);
+    const {programs:programsFetched, status:statusPrograms} = useSelector((state)=>state.program);
+    const {profiles:profilesFetched,profile:selectedProfile, status:statusProfiles}=useSelector((state)=>state.profile);
+    const [goalLoaded,setGoalLoaded] = useState(false)
+    const [showLoadedGoal,setShowLoadedGoal] = useState(false)
+    const [goal,setGoal]=useState();
+    const [exercises,setExercises] = useState();
+    const [workouts,setWorkouts] = useState();
+    const [programs,setPrograms] = useState();
+    const [profile,setProfile]=useState();
+    const [exercisesLoaded,setExercisesLoaded] = useState(false);
+    const [workoutsLoaded,setWorkoutsLoaded] = useState(false);
+    const [programsLoaded,setProgramsLoaded] = useState(false);
+    const [profileLoaded,setProfileLoaded]=useState(false)
     
-    const exercises = useSelector(state=>state.exercise);
-    const contributor = true;
-    const isContributor = true;
-    const isAdmin = true;
-    // const formProps = {
-    //     programEdit: false,
-    //     workoutEdit : false,
-    //     exerciseEdit: false,
-    //     programAdd: false,
-    //     workoutAdd: false,
-    //     exerciseAdd: false
-    // }
-    const formProps = {
-        "programEdit": false,
-        "workoutEdit" : false,
-        "exerciseEdit": false,
-        "programAdd": false,
-        "workoutAdd": false,
-        "exerciseAdd": false
-    }
-
-    // const programs = [{
-    //     "name":"name value",
-    //     "type":"some workout type",
-    //     "completed":"workout completed boolean",
-    //     "exerciseList":[]
-    // },{
-    //     "name":"name value2",
-    //     "type":"some workout type2",
-    //     "completed":"workout completed boolean2",
-    //     "exerciseList":[]
-    // }]
-    const programs = [1,2,3]
-    // let formProp = formProps.exerciseAdd
-    
-    const [displayForm, setDisplayForm] = useState(formProps);
-
-    //set all the other values to false so to avoid rendering simultaneously different components
-    const handleContributorClick = (displayForm,formProp)=>{
-        for (let formProperty in displayForm){
-            if(formProperty===formProp)
-                continue
-            displayForm[formProperty] = false;
+    useEffect(()=>{
+        dispatch(fetchProfiles());
+        dispatch(fetchExercises());
+        dispatch(fetchWorkouts());
+        dispatch(fetchPrograms());
+        dispatch(fetchGoals());
+    },[dispatch])
+    useEffect(()=>{
+        if(statusProfiles==='succeeded'){
+            dispatch(selectProfileById(profileId))
         }
         
-        displayForm[formProp] = !displayForm[formProp];
-        
-        
-        // dispatch(getAllExercisesAsync());
-        return {...displayForm}
-    }
-
+    },[dispatch,statusProfiles])
+    useEffect(()=>{
+        if(selectedProfile){
+            setProfile(selectedProfile);
+        }
+    },[selectedProfile])
+    useEffect(()=>{
+        if(statusGoal==='succeeded' && profile){
+            dispatch(selectGoalById(profile.goal))
+            setGoalLoaded(true)
+        }
+        if(goalLoaded){
+            setGoal(goalSelected)
+            setShowLoadedGoal(true)
+        }
+    },[statusGoal,goalLoaded,showLoadedGoal,statusExercises,statusWorkouts,statusPrograms, profile])
+    useEffect(()=>{
+        if(statusExercises ==='succeeded'){
+            setExercises(exercisesFetched);
+        }
+    },[statusExercises,exercises,exercisesFetched])
+    useEffect(()=>{
+        if(statusWorkouts==='succeeded'){
+            setWorkouts(workoutsFetched)
+        }
+    },[statusWorkouts,workouts,workoutsFetched])
+    useEffect(()=>{
+        if(statusPrograms==='succeeded'){
+            setPrograms(programsFetched);
+        }
+    },[statusPrograms,programs,programsFetched])
+    useEffect(()=>{
+        if(programs){
+            setProgramsLoaded(true)
+        }
+        if(exercises){
+            setExercisesLoaded(true)
+        }
+        if(workouts){
+            setWorkoutsLoaded(true)
+        }
+    },[exercises,exercisesLoaded,workouts,workoutsLoaded,programs,programsLoaded])
     // useEffect(()=>{
-    //     dispatch(getAllExercisesAsync());
-    // },[dispatch]);
+    //     if(goalLoaded){
+    //         setGoal(goalSelected);
+    //         setShowLoadedGoal(true);
+    //     }
+    // },[goalLoaded,showLoadedGoal])
+    
+    useEffect(()=>{},[])
+    useEffect(()=>{},[])
 
+    if(!showLoadedGoal || !workoutsLoaded || !exercisesLoaded || !programsLoaded){
+        return <div>Loading...</div>
+    }
+    const handleNavToPrograms = (id)=>{
+        navigate(`/goal/${id}/programs`);
+    }
+    const handleRegisteredPrograms = ()=>{
+        
+    }
+    const handleRegisteredWorkouts = (id)=>{
+        navigate(`/goal/${id}/workouts`)
+    }
+    const handleRegisteredExercises = (id)=>{
+        navigate(`/goal/${id}/exercises`)
+    }
+    const handleGoalEdit = (id)=>{
+        navigate(`/goal/update/${id}`)
+    }
+    const handleGoalAdd = ()=>{
+        navigate('/goal/add');
+    }
     return(
-        <>
-        <h1>Profile</h1>
-        <ul>
-
+    <>
         {
-        isContributor && 
+        showLoadedGoal&& workoutsLoaded && exercisesLoaded && programsLoaded &&
         <>
-        {/* <WorkoutUpdate></WorkoutUpdate>
-        <ProgramUpdate></ProgramUpdate>
-        <ExerciseUpdate></ExerciseUpdate>
-        <ProgramAdd></ProgramAdd>
-        <WorkoutAdd></WorkoutAdd>
-        <ExerciseAdd></ExerciseAdd> */}
-        
-        
-        <button onClick={()=>setDisplayForm(handleContributorClick(displayForm,"programEdit"))}>Edit program</button>
-        <button onClick={()=>setDisplayForm(handleContributorClick(displayForm,"workoutEdit"))}>Edit workout</button>
-        <button onClick={()=>setDisplayForm(handleContributorClick(displayForm,"exerciseEdit"))}>Edit exercise</button>
-        <button onClick={()=>setDisplayForm(handleContributorClick(displayForm,"programAdd"))}>Add program</button>
-        <button onClick={()=>setDisplayForm(handleContributorClick(displayForm,"workoutAdd"))}>Add workout</button>
-        <button onClick={()=>setDisplayForm(handleContributorClick(displayForm,"exerciseAdd"))}>Add exercise</button>
-        {/* <button onClick={handleContributorClick(displayForm,"programAdd")}>Add a program</button> */}
-        {displayForm.programEdit && <ProgramForm forAdding={false}></ProgramForm>}
-        {displayForm.workoutEdit && <WorkoutForm forAdding={false}></WorkoutForm>}
-        {displayForm.exerciseEdit && <ExerciseForm forAdding={false} ></ExerciseForm>}
-        {displayForm.programAdd && <ProgramForm forAdding={true}></ProgramForm>}
-        {displayForm.workoutAdd && <WorkoutForm forAdding={true}></WorkoutForm>}
-        {displayForm.exerciseAdd && <ExerciseForm forAdding={true}></ExerciseForm>}
+
+            <button onClick={handleRegisteredPrograms}>My programs</button>
+            <button onClick={()=>{handleRegisteredWorkouts(goal.id)}}>My workouts</button>
+            <button onClick={()=>{handleRegisteredExercises(goal.id)}}>My exercises</button>
+            <button onClick={()=>{handleGoalEdit(goal.id)}}>Change My goal</button>
+            <button onClick={()=>{handleGoalAdd()}}>Set a Goal</button>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th colSpan={5}>My Goals</th>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date started</th>
+                        <th>Date ended</th>
+                        <th>Total Programs</th>
+                        <th>Programs</th>
+                    </tr>
+                        
+                </thead>
+                <tbody>
+                    <tr>
+                        <GoalItem goal={goal}/>
+                        <td><button onClick={()=>handleNavToPrograms(goal.id)}>Show Details</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </>
         }
-
         
-        {!isContributor && <ProgramChoice programs={programs}/>}
-        </ul>
-        
-        </>
+    </>
     )
 }
 

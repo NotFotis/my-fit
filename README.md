@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# MeFit
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Mefit is a workout companion software made to support people in achieving their fitness objectives. It is a collaborative project for the Noroff Java Fullstack Academy.
 
-## Available Scripts
+App is deployed at: https://my-fit-one.vercel.app/
 
-In the project directory, you can run:
+Repository used for Backend: [https://github.com/NotFotis/MeFit](https://github.com/NotFotis/MeFit "https://github.com/NotFotis/MeFit")
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Contributors
+Tasos Antoniou (Frontend)
+Fotis Staikos (Backend)
+Konstantinos Kokonos (Backend)
+Tilemachos	 Ziogas (Frontend)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ReactJS
+Redux
+Keycloak
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Application Walkthrough
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+With the use of MeFit, you can choose to add specific <strong>exercises, workouts and programs </strong> to a goal they set, and track their progress.  Each exercise provides an image and Youtube link for instructions.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src='https://github.com/ZiogasThlem/my-fit/blob/master/public/profile-page.png'/>
 
-### `npm run eject`
+<img src='https://github.com/ZiogasThlem/my-fit/blob/master/public/exercise-list.png'/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+MeFit also provides special tools for <strong>Contributors</strong>. A Contributor is basically a Trainer. They can choose to add new exercises, workouts or programs or edit some of the already existing ones. Moreover, if they think is necessary they can have an exercise, workout or program deleted for good
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src='https://github.com/ZiogasThlem/my-fit/blob/master/public/my-workouts.png'/>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src='https://github.com/ZiogasThlem/my-fit/blob/master/public/manage-workouts.png'/>
