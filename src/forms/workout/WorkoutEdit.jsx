@@ -100,20 +100,7 @@ const WorkoutEdit = ()=>{
                             )
                         }
                         )}
-                        <tr>
-                            <h1>
-                            Exercises not included
-                            </h1>
-                        </tr>
-                        {exercisesNotIncluded.map((exercise,index)=>{
-                            return(
-                                <tr key={`${date}_${index}`}>
-                                    <ExerciseItem exercise={exercise}/>
-                                    <td><input type={'checkbox'}/></td>
-                                </tr>
-                            )
-                        }
-                        )}
+                        
                     </tbody>
                 </table>
             </div>

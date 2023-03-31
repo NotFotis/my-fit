@@ -6,6 +6,9 @@ const ProgramItem = ({program})=>{
             </td>
             <td>
                 {program.category}
+            </td>
+            <td>
+                {program.workout==undefined?0:program.workout.length}
             </td>            
         </>
     )

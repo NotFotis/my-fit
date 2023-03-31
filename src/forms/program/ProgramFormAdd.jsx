@@ -11,16 +11,28 @@ const ProgramFormAdd = ()=>{
     const [showWorkouts, setShowWorkouts] = useState();
     const [workoutsToSelect,setWorkoutsToSelect] = useState();
     const [workoutIds,setWorkoutIds]=useState([]);
-    const [checkedItems,setCheckedItems] = useState({});
+    const [checkedItems,setCheckedItems] = useState([]);
     const [formData,setFormData] = useState({name:'', category:'', workout:[]})
     const {workouts} = useSelector((state)=>{
         return state.workout;
     })
     useEffect(()=>{
-        if(workoutsToSelect!=workouts && workoutsToSelect==undefined){
+        if(workouts){
             setWorkoutsToSelect([...workouts])
+            setCheckedItems([...workouts.map(()=>false)]);
+            setWorkoutIds([...workouts.map(()=>0)]);
         }
-    },[workoutsToSelect,workouts])
+        
+    },[workouts])
+    useEffect(()=>{
+        setWorkoutIds([...checkedItems.map((item,index)=>{
+            if(item){
+                return workoutIds[index];
+            }
+            return 0;
+        })])
+    },[checkedItems])
+
     useEffect(()=>{
         if(workoutsToSelect!=undefined){
             setShowWorkouts(true)
@@ -31,30 +43,25 @@ const ProgramFormAdd = ()=>{
 
     const handleSubmit = (event)=>{
         event.preventDefault();
-        const itemPayload = {name:formData.name, category:formData.category, workout:workoutIds, goal:[1], complete:false}
+        const workoutIdsPool = [...workoutIds.filter((item)=>item!==0)]
+        const itemPayload = {name:formData.name, category:formData.category, workout:workoutIdsPool, goal:[1], complete:false}
         dispatch(addProgram(itemPayload))
     }
     const handleBack = ()=>{
         navigate('/programs');
     }
 
-    const handleAddWorkout = (event,id)=>{
-        const isChecked = event.target.checked;
-        setCheckedItems(prevState => ({
-            ...prevState,
-            [event.target.name]: isChecked
-        }));
-        if (isChecked){
-            if(workoutIds==undefined){
-                setWorkoutIds([id])
-                return
-            }
-            else if(!workoutIds.includes(id)){
-                setWorkoutIds([...workoutIds, id]);
-            }
-        } else {
-            setWorkoutIds(removeElementFromArray(workoutIds, id))
-        }
+    const handleWorkout = (event,itemId,index)=>{
+        setCheckedItems((prevItems)=>{
+            const newItems = [...prevItems];
+            newItems[index] = !prevItems[index]
+            return newItems
+        })
+        setWorkoutIds((prevIds)=>{
+            const newIds = [...prevIds];
+            newIds[index]=itemId;
+            return newIds;
+        })
         console.log(workoutIds);
     }
     const date=String(new Date())
@@ -91,6 +98,7 @@ const ProgramFormAdd = ()=>{
                                     <tr>
                                     <th>Name</th>
                                     <th>Type</th>
+                                    <th>Total Exercises</th>
                                     </tr>
                                 </thead>  
                                 <tbody>
@@ -101,9 +109,9 @@ const ProgramFormAdd = ()=>{
                                                     <WorkoutItem workout={workout}/>
                                                     <td>
                                                         <input type={'checkbox'}
-                                                                onChange={(event)=>{handleAddWorkout(event,workout.id)}}
+                                                                onChange={(event)=>{handleWorkout(event,workout.id,index)}}
                                                                 name={`checkbox${index}`}
-                                                                checked={checkedItems[`checkbox${index}`]}
+                                                                checked={checkedItems[index] || false}
                                                         />
                                                     </td>
                                                 </tr>

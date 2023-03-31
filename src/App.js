@@ -24,6 +24,9 @@ import Navbar from './views/navbar';
 import Workouts from './views/Workouts';
 import Programs from './views/Programs';
 import Exercises from './views/Exercises';
+import GoalEdit from './forms/goal/GoalEdit';
+import GoalFormAdd from './forms/goal/GoalFormAdd';
+
 
 
 
@@ -59,10 +62,12 @@ function App() {
       {/* USER */}
         {/* <Route path="/goal/:id/programs" element={<Programs/>}/>
         <Route path="/goal/:id/workouts" element={<Workouts/>}/>
-        <Route path="/goal/:id/exercises" element={<Exercises/>}/> */}
+      <Route path="/goal/:id/exercises" element={<Exercises/>}/> */}
           <Route path='goal/:id/workouts' element={<Workouts/>}/>
           <Route path='goal/:id/programs' element={<Programs/>}/>
           <Route path='goal/:id/exercises' element={<Exercises/>}/>
+          <Route path='goal/update/:id' element={<GoalEdit/>}/>
+          <Route path='goal/add' element={<GoalFormAdd/>}/>
         {/* <Route path="/exerciseAdd" element={<ExerciseFormAdd/>}/>
         <Route path="/exercise/update" element={<ExerciseListFormUpdate/>}/>
         <Route path="/exercise/update/:id" element={<ExerciseItemUpdate/>}/>

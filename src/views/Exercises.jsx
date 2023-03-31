@@ -81,24 +81,34 @@ const Exercises = ()=>{
             setPrograms(programsSelected)
         }
         if(programs){
-            
+            programs.forEach(program => {
+                
+                setwIdPool((prevIds)=>{
+                    let  newIds=[];
+                    if(Array.isArray(prevIds)){
+                        newIds = [...prevIds]
+                        if(Array.isArray(program.workout)){
+                            newIds = [...prevIds,...program.workout]
+                        }
+                    }else{
+                        if(Array.isArray(program.workout)){
+                            newIds = [...program.workout]
+                        }
+                    }
+                    const newIdsFixed= [...newIds];
+                    // const newIds =[...new Set(prevIds)];
+                    console.log(newIdsFixed);
+                    return [...new Set(newIdsFixed)]
+                    
+                    
+                })
+            });
             setProgramsLoaded(true)
         }
     },[programsSelected, programsLoaded])
     useEffect(()=>{
         if(programsLoaded){
-            programs.forEach(program => {
-                
-                setwIdPool((prevIds)=>{
-                    const newIds =[...new Set(prevIds),...program.workout];
-                    if(newIds!=undefined){
-                        return newIds
-                    }
-                    else{
-                        return
-                    }
-                })
-            });
+           
            
         }
         
@@ -113,7 +123,7 @@ const Exercises = ()=>{
     },[dispatch,wIdPool])
     useEffect(()=>{
         console.log(workoutsSelected);
-        if(workoutsSelected!=undefined){
+        if(Array.isArray(workoutsSelected) && workoutsSelected.length>0){
             if(workoutsSelected[0]!=undefined){
                 setWorkouts(workoutsSelected)
                 console.log(workoutsSelected);

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import GoalFormAdd from "../forms/goal/GoalFormAdd";
 import GoalItem from "../forms/goal/GoalItem";
 import keycloak from "../keycloak";
 import { fetchExercises } from "../reduxParts/reducers/exerciseSlice";
 import { fetchGoals, selectGoalById } from "../reduxParts/reducers/goalSlice";
+import { fetchProfiles, selectProfileById } from "../reduxParts/reducers/profileSlice";
 import { fetchPrograms } from "../reduxParts/reducers/programSlice";
 import { fetchWorkouts } from "../reduxParts/reducers/workoutSlice";
 
@@ -18,6 +20,7 @@ const Profile = () =>{
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const profileId = 1;
     const goalId=1;
     const {goal:goalSelected,status:statusGoal,goals} = useSelector(state=>{
         console.log(state.goal);
@@ -25,32 +28,47 @@ const Profile = () =>{
     const {exercises:exercisesFetched, status:statusExercises} = useSelector((state)=>state.exercise);
     const {workouts:workoutsFetched, status:statusWorkouts} = useSelector((state)=>state.workout);
     const {programs:programsFetched, status:statusPrograms} = useSelector((state)=>state.program);
+    const {profiles:profilesFetched,profile:selectedProfile, status:statusProfiles}=useSelector((state)=>state.profile);
     const [goalLoaded,setGoalLoaded] = useState(false)
     const [showLoadedGoal,setShowLoadedGoal] = useState(false)
     const [goal,setGoal]=useState();
     const [exercises,setExercises] = useState();
     const [workouts,setWorkouts] = useState();
     const [programs,setPrograms] = useState();
+    const [profile,setProfile]=useState();
     const [exercisesLoaded,setExercisesLoaded] = useState(false);
     const [workoutsLoaded,setWorkoutsLoaded] = useState(false);
     const [programsLoaded,setProgramsLoaded] = useState(false);
+    const [profileLoaded,setProfileLoaded]=useState(false)
     
     useEffect(()=>{
+        dispatch(fetchProfiles());
         dispatch(fetchExercises());
         dispatch(fetchWorkouts());
         dispatch(fetchPrograms());
         dispatch(fetchGoals());
     },[dispatch])
     useEffect(()=>{
-        if(statusGoal==='succeeded'){
-            dispatch(selectGoalById(goalId))
+        if(statusProfiles==='succeeded'){
+            dispatch(selectProfileById(profileId))
+        }
+        
+    },[dispatch,statusProfiles])
+    useEffect(()=>{
+        if(selectedProfile){
+            setProfile(selectedProfile);
+        }
+    },[selectedProfile])
+    useEffect(()=>{
+        if(statusGoal==='succeeded' && profile){
+            dispatch(selectGoalById(profile.goal))
             setGoalLoaded(true)
         }
         if(goalLoaded){
             setGoal(goalSelected)
             setShowLoadedGoal(true)
         }
-    },[statusGoal,goalLoaded,showLoadedGoal,statusExercises,statusWorkouts,statusPrograms])
+    },[statusGoal,goalLoaded,showLoadedGoal,statusExercises,statusWorkouts,statusPrograms, profile])
     useEffect(()=>{
         if(statusExercises ==='succeeded'){
             setExercises(exercisesFetched);
@@ -102,15 +120,25 @@ const Profile = () =>{
     const handleRegisteredExercises = (id)=>{
         navigate(`/goal/${id}/exercises`)
     }
+    const handleGoalEdit = (id)=>{
+        navigate(`/goal/update/${id}`)
+    }
+    const handleGoalAdd = ()=>{
+        navigate('/goal/add');
+    }
     return(
     <>
         {
         showLoadedGoal&& workoutsLoaded && exercisesLoaded && programsLoaded &&
         <>
-        <h1>Welcome, {keycloak.tokenParsed.name}</h1>
-            <button onClick={handleRegisteredPrograms}>My Programs</button>
-            <button onClick={()=>{handleRegisteredWorkouts(goal.id)}}>My Workouts</button>
-            <button onClick={()=>{handleRegisteredExercises(goal.id)}}>My Exercises</button>
+
+            <button onClick={handleRegisteredPrograms}>My programs</button>
+            <button onClick={()=>{handleRegisteredWorkouts(goal.id)}}>My workouts</button>
+            <button onClick={()=>{handleRegisteredExercises(goal.id)}}>My exercises</button>
+            <button onClick={()=>{handleGoalEdit(goal.id)}}>Change My goal</button>
+            <button onClick={()=>{handleGoalAdd()}}>Set a Goal</button>
+
+
             <table>
                 <thead>
                     <tr>

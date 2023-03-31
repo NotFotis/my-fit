@@ -21,10 +21,11 @@ const ExerciseFormAdd=(exerciseStructure)=>{
     }
     return(
         <>
-        
+        <h1>Add a new Exercise</h1>
+        <h3>FIll the details</h3>
             <form onSubmit={handleSubmit}>
                            
-      <label>
+      <label >
         Name:
         <input
           type="text"

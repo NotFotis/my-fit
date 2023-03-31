@@ -4,7 +4,7 @@ const WorkoutItem = ({workout})=>{
     <>
     <td>{`${workout.name}`}</td>
     <td>{`${workout.type}`}</td>
-    <td>{`${workout.exercise.length}`}</td>
+    <td>{`${Array.isArray(workout.exercise)?workout.exercise.length:0}`}</td>
     </>
     )
 }

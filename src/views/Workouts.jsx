@@ -7,12 +7,16 @@ import { selectProgramsByIds } from "../reduxParts/reducers/programSlice";
 import { selectWorkoutsByIds } from "../reduxParts/reducers/workoutSlice";
 import {removeDuplicateObjects} from "../helpers/removeDuplicateObjects";
 import WorkoutItem from "../forms/workout/WorkoutItem";
+import { removeDuplicateNumbers } from "../helpers/removeDuplicateNumbers";
+
+
 
 const Workouts = () =>{
     const dispatch= useDispatch();
     //validate the id goal(select the profile id, then select the goal id, we suupose that the goal id is 1)
     const goalId=1;
     const {id}=useParams();
+    
     const [isUsersProfile,setIsUsersProfile]=useState()
     const goalSelected=useSelector((state)=>state.goal.goal)
     const programsSelected = useSelector((state)=>state.program.selectedPrograms);
@@ -21,90 +25,153 @@ const Workouts = () =>{
         // console.log('state of workouts',state.workout);
         return state.workout.selectedWorkouts});
     const [goalLoaded,setGoalLoaded] = useState(false)
-    const [goal,setGoal]=useState();
+    const [goal,setGoal]=useState({});
     const [programs,setPrograms]=useState([]);
     const [programsLoaded,setProgramsLoaded]=useState(false);
     const [workoutsLoaded,setWorkoutsLoaded]=useState(false);
     const [workoutIdsCollectionFinished,setWorkoutIdsCollectionFinished]=useState();
     const [workoutIds,setWorkoutIds]=useState([])
+    const [workoutIdsLoaded,setWorkoutIdsLoaded]=useState(false)
     const [workouts,setWorkouts]=useState([])
     const [workoutsToShow,setWorkoutsToShow]=useState(false)
+    const [exerciseIds,setExerciseIds]=useState([]);
+    const [exerciseIdsLoaded,setExerciseIdsLoaded]=useState(false);
+    const [toggleExercises,setToggleExercises]=useState([]);
     console.log(workoutsSelected);
     //select programs
     //select the workouts in registerd programs
     useEffect(()=>{
         if(goalSelected){
-            setGoal(goalSelected);
+            setGoal(goalSelected)
+                
+            
         }
     },[goalSelected])
     
     useEffect(()=>{
-        if(goalSelected){
+        if(goal){
             dispatch(selectProgramsByIds(goalSelected.program))
+            console.log(goal.id);
             setGoalLoaded(true)
         }
        
-    },[dispatch])
+    },[dispatch,goal,goalLoaded])
+    
     useEffect(()=>{
-        dispatch(selectProgramsByIds(goalSelected.program))
-    },[dispatch])
-    useEffect(()=>{
-        if(statusPrograms==='succeeded'){
-            setPrograms([...programsSelected])
-            setProgramsLoaded(true)
-        }
-    },[statusPrograms])
-    useEffect(()=>{
-        if(programsLoaded){
-            
-            programs.forEach(
-                (program,index)=>{
-                    console.log(program.workout);
-                    setWorkoutIds((prevIds)=> [...new Set(prevIds),...program.workout])
-                    console.log(workoutIds);
+        if(programsSelected.length>=1){
+            setPrograms((prevPrograms)=>{
+                if(programsSelected==undefined){
+                    return prevPrograms
+                }
+                let newPrograms = [...prevPrograms,...programsSelected];
+                newPrograms = removeDuplicateObjects(newPrograms)
+                console.log(programs);
+                return [...newPrograms]
                 }
             )
-           
+            // setPrograms([...programsSelected])
+            
         }
-
-    },[programsLoaded,programs])
+        // if(programs){
+        //     setProgramsLoaded(true)
+        // }
+    },[programsSelected])
     useEffect(()=>{
-        if(workoutIds.length>1)
-        {
+        if(programsSelected){
+            
+            // programsSelected.forEach(
+            //     (program,index,programsSelected)=>{
+            //         console.log(program.workout);
+            //         setWorkoutIds((prevIds)=>{
+            //             // if(program.workout==undefined){return }
+            //             console.log(workoutIds);
+            //             const newIds = [...prevIds,...program.workout]
+            //             return [...new Set(newIds)];
+            //             }
+            //         )
+            //        if(index==programsSelected.length-1){
+            //             setWorkoutIdsLoaded(true)
+            //        }
+            //     }
+            // )
+            const wIdPool = programsSelected.map((program)=>program.workout)
+            setWorkoutIds(...wIdPool)
+
+        }
+           
+        
+
+    },[programsSelected])
+    useEffect(()=>{
+            if(workoutIds.length>1){
             console.log('workout ids',workoutIds);
             setWorkoutIdsCollectionFinished(true)
             dispatch(selectWorkoutsByIds(workoutIds))
+            const newToggledExercises = workoutIds.map(() => false);
+            setToggleExercises(newToggledExercises);
         }
-    },[workoutIds,dispatch])
+        
+    },[workoutIds])
     useEffect(()=>{
         
         if(workoutsSelected){
-            setWorkouts([...workoutsSelected])
+            setWorkouts((prevWorkouts)=>{
+                let newWorkouts = [...prevWorkouts,...workoutsSelected]
+                console.log(workoutsSelected);
+                newWorkouts = removeDuplicateObjects(newWorkouts)
+                return [...newWorkouts]
+            })
+            // setWorkouts([...workoutsSelected])
             setWorkoutsLoaded(true)
             console.log(workoutsSelected);
             console.log(workouts);
         }
     },[workoutsSelected])
     useEffect(()=>{
-        if(workouts.length>1){
-            setWorkoutsToShow(true)
+        if(workouts.length>=1){
+            // setWorkoutsToShow(true)
+            // workouts.map((workout,index,workouts)=>{
+            //     setExerciseIds((prevIds)=>
+            //     {
+            //         if(workout.exercise==undefined){return prevIds}
+            //         const newIds = [...prevIds,...workout.exercise];
+                    
+            //         console.log(exerciseIds);
+            //             return [...removeDuplicateNumbers(newIds)];
+            //         })
+               
+            // }
+            
+            // const exIdPool= workouts.map((workout)=>workout.exercise);
+            // setExerciseIds([...new Set(exIdPool)])
+
         }
     },[workouts])
     
     useEffect(()=>{
        
-        if(goal){
-            goal.id==id?setIsUsersProfile(true):setIsUsersProfile(false)
+        if(goalSelected.id!=undefined && goalSelected.id==id){
+            console.log(goalSelected);
+            // goalSelected.id===id?setIsUsersProfile(true):setIsUsersProfile(false)
+            setIsUsersProfile(true)
         }
-    },[goal])
+    },[goalSelected])
     
    
 
+   useEffect(()=>{
+        console.log(isUsersProfile);
+   },[isUsersProfile])
 
-
-
-    
-    if(!workoutsToShow){
+    const toggleExercisesHandler=(exerciseIds,index)=>{
+        setToggleExercises((prevValues)=>{
+            const newValues = [...prevValues]
+            newValues[index]=!prevValues[index]
+            return newValues
+        })
+    }
+   
+    if(!workouts.length>=1){
         return <div>Loading...</div>
     }
     if(!isUsersProfile){
@@ -124,13 +191,16 @@ const Workouts = () =>{
                 </tr>
             </thead>
             <tbody>
-        {workoutsToShow &&
+        {workouts.length>=1 &&
             workouts.map((workout,index)=>{
+               
             return    <React.Fragment key={`${date}_frag_${index}`}>
                     <tr key={`${date}_${index}_tr`}>
                         <WorkoutItem workout={workout}/>
-                        <td><button>Show Exercises</button></td>
-                        <td><button>Hide Exercises</button></td>
+
+                    {!toggleExercises[index] ?  <td><button onClick={()=>toggleExercisesHandler(workout.exercise,index)}>Show exercises</button></td>
+                        :<td><button onClick={()=>toggleExercisesHandler(workout.exercise,index)}>Hide exercises</button></td>}
+
                     </tr>
                     
                     <tr></tr>

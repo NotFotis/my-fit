@@ -32,37 +32,39 @@ const Programs = ()=>{
     const [workouts,setWorkouts]=useState()
     const [workoutsLoaded,setWorkoutsLoaded] = useState(false);
     const [workoutsToShow,setWorkoutsToShow]=useState(false);
-    const [showWorkouts,setShowWorkouts] = useState([])
+    const [toggleWorkouts,settoggleWorkouts] = useState([])
     const [programWorkout,setProgramWorkout]=useState();
+    const [workoutsPerProgram,setWorkoutsPerProgram]=useState([]);
     useEffect(()=>{
         dispatch(selectGoalById(id))
     },[dispatch])
     useEffect(()=>{
         if(goalSelected){
             setGoal(goalSelected);
+            setWorkoutsPerProgram([...new Array(goalSelected.program)])
+            dispatch(selectProgramsByIds(goalSelected.program));
+            settoggleWorkouts([...goalSelected.program.map(()=>false)])
         }
-        if(goal!=undefined){
+        if(goalSelected){
             setGoalLoaded(true)
+             
         }
         if(goalLoaded){
-            dispatch(selectProgramsByIds(goal.program));
+            
             // dispatch(selectProgramsByIds(id));
         }
-    },[goal,goalSelected,goalLoaded])
+    },[goal,goalSelected,goalLoaded,dispatch])
     useEffect(()=>{
         if(selectedPrograms){
             setSelectedProgramsLoaded(true);
         }
         if(selectedProgramsLoaded){
-            setPrograms(selectedPrograms);
+            setPrograms([...selectedPrograms]);
             
         }
     },[selectedPrograms, selectedProgramsLoaded])
-    useEffect(()=>{
-        if(programs){
-            setProgramsLoaded(true);
-        }
-    },[programs,programsLoaded])
+    
+   
     useEffect(()=>{
         if(workoutsLoaded){
             setWorkouts(selectedWorkouts);
@@ -70,36 +72,65 @@ const Programs = ()=>{
         }
     },[selectedWorkouts,workoutsLoaded])
     useEffect(()=>{
+        if(programs){
+            programs
+            .map((program,programIndex)=>{
+                    setWorkoutsPerProgram ((prevWorkouts)=>{
+                                                if(Array.isArray(program.workout)){                        
+                                                    if(!Array.isArray(prevWorkouts)){
+                                                        // const newWorkouts = [...programs.map((program)=>program)]
+                                                        
+                                                        const newWorkoutsArray = new Array(program.workout.length)
+                                                        for(let newArrayIndex in newWorkoutsArray){
+                                                            newWorkoutsArray[newArrayIndex]=programs[newArrayIndex].workout;
+                                                        }
+                                                        console.log(newWorkoutsArray);
+                                                        return [...newWorkoutsArray];
+                                                    }
+                                                    else{
 
-    },[])
+                                                // const newWorkouts = [...prevWorkouts,...programs.map((program)=>program)]
+                                                
+                                                            const newWorkoutsArray = new Array(program.workout.length)
+                                                            
+                                                            
+                                                            for(let newArrayIndex in newWorkoutsArray){
+                                                                newWorkoutsArray[newArrayIndex]=programs[newArrayIndex].workout;
+                                                            }
+                                                            console.log(workoutsPerProgram);
+                                                            return [...newWorkoutsArray];
+                                                            
+                                                        }
+                                                }
+                                                if(!Array.isArray(prevWorkouts)){
+                                                    return
+                                                }
+                                                return [...prevWorkouts]
+                                        
+                                            }
+                                        )
+                    }
+            )
+            if(workoutsPerProgram.length>0)
+                setProgramsLoaded(true);
+        }
+    },[programs])
     // useEffect(()=>{
     //     if(!showWorkouts){
     //         setWorkouts();
     //     }
     // },[showWorkouts])
-    const handleShowWorkouts=(workoutIds,index)=>{    
-        dispatch(selectWorkoutsByIds(workoutIds));
-        setWorkoutsLoaded(true);
-        if(index>=showWorkouts.length){
-            setShowWorkouts((prevShowWorkouts)=>{
-                const updatedShowWorkouts = [...prevShowWorkouts];
-                updatedShowWorkouts.push(true);
-                return updatedShowWorkouts;
-            })
-        }else{
-            setShowWorkouts([true]);
-        }
-        console.log(showWorkouts);
-    }
-    const handleHideWorkouts=(index)=>{
-       setWorkoutsToShow(false)
-        console.log('mpika');
-        setShowWorkouts((prevShowWorkouts) => {
-            let updatedShowWorkouts = Array.isArray(prevShowWorkouts)?[...prevShowWorkouts]:prevShowWorkouts
-            Array.isArray(prevShowWorkouts)?updatedShowWorkouts[index]=false:updatedShowWorkouts=false
-            return updatedShowWorkouts;
-        });
-        dispatch(selectWorkoutsByIds())
+   
+    const toggleWorkoutsHandler=(workoutsIds,index)=>{
+        
+        settoggleWorkouts((prevValues)=>{
+            const newValues = [...prevValues]
+            newValues[index]=!prevValues[index]
+            return newValues
+        })
+        console.log(workoutsPerProgram);
+        console.log(toggleWorkouts);
+        
     }
     const date=String(new Date());
     // WE MUST RETURN THE FALSE BOOLEANS TO WORK THIS
@@ -129,18 +160,20 @@ const Programs = ()=>{
                 </thead>
                 
                 <tbody>
-                    {programsLoaded&& programs
+                    {programs
                         .map((program,index,programs)=>{
                                             return (
                                                 <React.Fragment key={`${date}_${index}`}>
                                                         <tr >
                                                             <ProgramItem program={program} key={`${date}_${index}`}/>
-                                                            <td>{program.workout.length}</td>
-                                                            {!showWorkouts[index]?         <td><button key={`${date}_${index}_${index}`} onClickCapture={()=>handleShowWorkouts(program.workout,index)}>Show Workouts</button></td> :
-                                                                <td><button key={`${date}_${index}_button`} onClickCapture={()=>handleHideWorkouts(index)}>Hide Workouts</button></td>}
+
+                                                            <td>{Array.isArray(program.workout)?program.workout.length:0}</td>
+                                                            {!toggleWorkouts[index]?         <td><button key={`${date}_${index}_${index}`} onClickCapture={()=>toggleWorkoutsHandler(program.workout,index)}>Show workouts</button></td> :
+                                                                <td><button key={`${date}_${index}_button`} onClickCapture={()=>toggleWorkoutsHandler(program.workout,index)}>Hide workouts</button></td>}
+
                                                         </tr>
                                                         
-                                                                <ToggleableWorkouts  key={`${date}_${index}_toggle`} workoutIds={program.workout} programIndex={index} toggle={showWorkouts}/>
+                                                    {toggleWorkouts[index] && workoutsPerProgram[index] &&  <ToggleableWorkouts  key={`${date}_${index}_toggle`} workoutIds={program.workout}  toggle={toggleWorkouts} workoutsPerProgram={workoutsPerProgram}/>}
                                                 </React.Fragment>  
                                                     
                                                 

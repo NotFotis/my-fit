@@ -3,42 +3,38 @@ import { useDispatch, useSelector } from "react-redux"
 import WorkoutItem from "../forms/workout/WorkoutItem"
 import { fetchWorkouts, selectWorkoutsByIds } from "../reduxParts/reducers/workoutSlice";
 
-const ToggleableWorkouts = ({workoutIds, programIndex, toggle})=>{
+const ToggleableWorkouts = ({workoutIds, toggle, index, workoutsPerProgram})=>{
     const [ids,setIds]=useState();
     const dispatch = useDispatch();
     const [toggleWorkouts,setToggleWorkouts]=useState(false)
-    const{workouts:fetchedWorkouts, status, selectedWorkouts:selectedWorkouts}=useSelector(state=>state.workout);
-    const [fetchedWorkoutsLoaded, setFetchedWorkoutsLoaded]=useState(false);
+    // const selectedWorkouts=useSelector(state=>selectWorkoutsByIds (state.workout.workouts))
+    //     {
+    //         console.log(state.workout.selectedWorkouts);
+    //      selectWorkoutsByIds (state.workout, workoutIds);
+    //     }
+    //     );
+    const selectedWorkouts = useSelector(state=>state.workout.selectedWorkouts);
     const [workouts,setWorkouts]=useState();
-    const [workoutsLoaded,setWorkoutsLoaded]=useState(false)
+    const [workoutsLoaded,setWorkoutsLoaded]=useState(false);
+    
+    console.log(workoutIds);
+    useEffect(()=>{
+            console.log(workoutIds);
+            console.log(workoutsPerProgram[index]);
+            dispatch(selectWorkoutsByIds(workoutsPerProgram[index]))
+            dispatch(selectWorkoutsByIds(workoutIds))
+        
+    },[workoutsPerProgram,dispatch,workoutIds])
 
-    // useEffect(()=>{
-    //     dispatch(fetchWorkouts())
-    // },[dispatch])
-    // useEffect(()=>{
-    //     if(status==='succeeded'){
-    //         setFetchedWorkoutsLoaded(true)
-    //     }
-    // },[status])
-    // useEffect(()=>{
-    //     if(workoutIds){
-    //         setIds([...workoutIds])
-    //     }
-    //     if(fetchedWorkoutsLoaded && ids){
-    //         dispatch(selectWorkoutsByIds(ids))        
-    //     }
-    // },[fetchedWorkoutsLoaded,workoutIds,dispatch,ids])
-    // useEffect(()=>{
-    //     if(selectedWorkouts){
-    //         setWorkouts(selectedWorkouts)
-    //     }
-    //     if(workouts){
-    //         setWorkoutsLoaded(true)
-    //     }
-    // },[selectedWorkouts,workouts])
+    useEffect(()=>{
+        console.log(toggle);
+        if(toggle[index]){
+            setWorkouts ([...selectedWorkouts]);
+        }
+    },[toggle[index]])
     
     const date=String(new Date())
-    if(!workoutsLoaded && toggle[programIndex]){
+    if(!workouts){
         return <tr><td>Loading...</td></tr>
     }
     return(
@@ -50,7 +46,7 @@ const ToggleableWorkouts = ({workoutIds, programIndex, toggle})=>{
         </td>
         </tr> */}
         
-       {toggle[programIndex]&& workoutsLoaded&&
+       {
                             <>
                                 
                                     <tr>
@@ -62,10 +58,11 @@ const ToggleableWorkouts = ({workoutIds, programIndex, toggle})=>{
                                         <td>Total exercises</td>
                                     </tr>
                                 
-                                    {workouts.map((workout,index)=>{
+                                    {workouts && workouts.map((workout,index)=>{
+                                        return(
                                         <tr key={`${date}_${index}_${index}`}>
                                             <WorkoutItem workout={workout}/>
-                                        </tr>
+                                        </tr>)
                                         }
                                     )}
                                 

@@ -49,7 +49,8 @@ export const addWorkout = createAsyncThunk("workout/addWorkout", async (workout)
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + keycloak.token
+      // 'Authorization': 'Bearer ' + keycloak.token
+      'x-api-key':apiKey
     },
     body: JSON.stringify(workout),
   });
@@ -63,7 +64,8 @@ export const updateWorkout = createAsyncThunk("workout/updateWorkout", async (wo
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + keycloak.token
+      // 'Authorization': 'Bearer ' + keycloak.token
+      'x-api-key':apiKey
     },
     body: JSON.stringify(workout),
   });
@@ -77,7 +79,8 @@ export const deleteWorkout = createAsyncThunk("workout/deleteWorkout", async (id
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + keycloak.token
+      // 'Authorization': 'Bearer ' + keycloak.token
+      'x-api-key':apiKey
     },
   });
   const data = await response.json();
@@ -118,11 +121,11 @@ const workoutSlice = createSlice({
   ,
   reducers:{
     selectWorkoutsByIds :(state, action) =>{
-      console.log(action.payload);
+      console.log(action);
       console.log(state.workout);
       const selectedIds = action.payload;
       const workoutsToHandle = state.workouts;
-      if(workoutsToHandle!=undefined && selectedIds!=undefined){
+      if(Array.isArray(workoutsToHandle) && selectedIds!=undefined){
         state.selectedWorkouts = filterArrayByIds(workoutsToHandle,selectedIds)
       }else if(selectedIds==undefined){
         state.selectedWorkouts = []

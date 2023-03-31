@@ -9,6 +9,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import workoutReducer from "./reducers/workoutSlice.js"
 import goalReducer from "./reducers/goalSlice.js"
 import programReducer from "./reducers/programSlice.js"
+import profileReducer from "./reducers/profileSlice.js"
+
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleWare))
 
@@ -18,7 +20,8 @@ export default configureStore({
         exercise: exerciseReducer,
         workout:workoutReducer,
         program:programReducer,
-        goal:goalReducer
+        goal:goalReducer,
+        profile:profileReducer
     },
     
     // middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(logger),

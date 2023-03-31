@@ -49,7 +49,8 @@ export const addProgram = createAsyncThunk("program/addProgram", async (program)
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + keycloak.token
+      // 'Authorization': 'Bearer ' + keycloak.token
+      'x-api-key':apiKey
     },
     body: JSON.stringify(program),
   });
@@ -63,7 +64,8 @@ export const updateProgram = createAsyncThunk("program/updateProgram", async (pr
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + keycloak.token
+      // 'Authorization': 'Bearer ' + keycloak.token
+      'x-api-key':apiKey
     },
     body: JSON.stringify(program),
   });
@@ -77,7 +79,8 @@ export const deleteProgram = createAsyncThunk("program/deleteProgram", async (id
     // headers: HeadersApi,
         headers:{
       "Content-Type": "application/json",
-      'Authorization': 'Bearer ' + keycloak.token
+      // 'Authorization': 'Bearer ' + keycloak.token
+      'x-api-key':apiKey
     },
   });
   const data = await response.json();
@@ -118,6 +121,9 @@ const programSlice = createSlice({
     
   ,
   reducers:{
+    selectAllPrograms:(state)=>{
+      return state.programs;
+    },
     selectProgramsByIds :(state, action) =>{
       console.log(action.payload);
       console.log(state.program);
@@ -145,6 +151,9 @@ const programSlice = createSlice({
             console.log(state.programs.find((item) => item.id === Number(id)));
             state.program = {...state.programs.find((item) => item.id === Number(id))}
             return state;
+        }
+        else{
+          return state;
         }
       }
     
@@ -208,6 +217,6 @@ export const selectProgramsStatus = (state) => state.program.status;
 
 export const selectProgramsError = (state) => state.program.error;
 
-export const{selectProgramsByIds, selectProgramById } =programSlice.actions;
+export const{selectProgramsByIds, selectProgramById,selectAllPrograms } =programSlice.actions;
 
 export default programSlice.reducer;

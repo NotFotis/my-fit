@@ -92,8 +92,8 @@ const ExerciseGetAll = ()=>{
                     
                         <tr key={`${date}_${index}`}>
                         <ExerciseItem exercise={exercise}/>
-                        <td><button onClick={()=>{handleEdit(exercise.id)}}>Edit</button></td>
-                        <td><button onClick={()=>{handleDelete(exercise.id)}}>Delete</button></td>
+                        <td><button className='edit' onClick={()=>{handleEdit(exercise.id)}}>Edit</button></td>
+                        <td><button className='delete' onClick={()=>{handleDelete(exercise.id)}}>Delete</button></td>
                         </tr>
                     
                 )

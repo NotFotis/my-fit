@@ -36,7 +36,7 @@ const ProgramEdit = ()=>{
         if(programLoaded){
             setWorkoutIds([...program.workout]);
         }
-    },[programLoaded,workoutIds])
+    },[programLoaded])
     const handleSubmit = (event)=>{
         event.preventDefault();
         const itemPayload = {id:program.id, name:formData.name, category:formData.category, workout:workoutIds, goal:program.goal, complete:false}
