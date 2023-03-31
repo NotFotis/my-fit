@@ -1,5 +1,5 @@
 import { configureStore} from "@reduxjs/toolkit";
-import exerciseReducer from './exercise/exerciseSlice.js';
+import exerciseReducer from './reducers/exerciseSlice.js';
 import thunkMiddleWare from "redux-thunk";
 import { applyMiddleware } from "@reduxjs/toolkit";
 //.import logger from 'redux-logger';
