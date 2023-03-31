@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ExerciseForm from "./ExerciseForm";
-import { getAllExercisesAsync } from "../../ReduxParts/exercise/exerciseSlice";
+import { getAllExercisesAsync } from "../../reduxParts/exercise/exerciseSlice";
 
 const ExerciseUpdate = ()=>{
     const [displayForm, setDisplayForm] = useState(false);

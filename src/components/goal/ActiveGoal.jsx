@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { completeGoal, doSomeProgress, resetGoal, subtractFromGoal } from '../../ReduxParts/goalSlice'
+import { completeGoal, doSomeProgress, resetGoal, subtractFromGoal } from '../../reduxParts/goalSlice'
 import { NavLink } from 'react-router-dom'
 
 const ActiveGoal = () => {
