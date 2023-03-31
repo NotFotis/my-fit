@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router";
-import { selectExercisesByIds } from "../../reduxParts/reducers/exerciseSlice";
+import { selectExercisesByIds } from "../../ReduxParts/reducers/exerciseSlice";
 import ExerciseItem from "./ExerciseItem";
 
 const ExerciseSelect = ()=>{

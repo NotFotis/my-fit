@@ -4,11 +4,11 @@ import { useNavigate } from "react-router";
 import GoalFormAdd from "../forms/goal/GoalFormAdd";
 import GoalItem from "../forms/goal/GoalItem";
 import keycloak from "../keycloak";
-import { fetchExercises } from "../reduxParts/reducers/exerciseSlice";
-import { fetchGoals, selectGoalById } from "../reduxParts/reducers/goalSlice";
-import { fetchProfiles, selectProfileById } from "../reduxParts/reducers/profileSlice";
-import { fetchPrograms } from "../reduxParts/reducers/programSlice";
-import { fetchWorkouts } from "../reduxParts/reducers/workoutSlice";
+import { fetchExercises } from "../ReduxParts/reducers/exerciseSlice";
+import { fetchGoals, selectGoalById } from "../ReduxParts/reducers/goalSlice";
+import { fetchProfiles, selectProfileById } from "../ReduxParts/reducers/profileSlice";
+import { fetchPrograms } from "../ReduxParts/reducers/programSlice";
+import { fetchWorkouts } from "../ReduxParts/reducers/workoutSlice";
 
 
 

@@ -51,8 +51,8 @@ export const addExercise = createAsyncThunk("exercise/addExercise", async (exerc
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     },
     body: JSON.stringify(exercise),
   });
@@ -66,8 +66,8 @@ export const updateExercise = createAsyncThunk("exercise/updateExercise", async 
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+      'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     },
     body: JSON.stringify(exercise),
   });
@@ -81,8 +81,8 @@ export const deleteExercise = createAsyncThunk("exercise/deleteExercise", async 
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     }
   });
   const data = await response.json();

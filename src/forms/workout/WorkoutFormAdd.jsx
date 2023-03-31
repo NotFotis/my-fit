@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { removeDuplicateNumbers } from "../../helpers/removeDuplicateNumbers";
 import { removeElementFromArray } from "../../helpers/removeElementFromArray";
-import { addWorkout } from "../../reduxParts/reducers/workoutSlice";
+import { addWorkout } from "../../ReduxParts/reducers/workoutSlice";
 import Workouts from "../../views/Workouts";
 import ExerciseItem from "../exercise/ExerciseItem";
 

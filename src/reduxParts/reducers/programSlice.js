@@ -49,8 +49,8 @@ export const addProgram = createAsyncThunk("program/addProgram", async (program)
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     },
     body: JSON.stringify(program),
   });
@@ -64,8 +64,8 @@ export const updateProgram = createAsyncThunk("program/updateProgram", async (pr
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      //'x-api-key':apiKey
     },
     body: JSON.stringify(program),
   });
@@ -79,8 +79,8 @@ export const deleteProgram = createAsyncThunk("program/deleteProgram", async (id
     // headers: HeadersApi,
         headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     },
   });
   const data = await response.json();

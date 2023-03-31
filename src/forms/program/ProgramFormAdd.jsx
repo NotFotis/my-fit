@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router"
 import { removeElementFromArray } from "../../helpers/removeElementFromArray";
-import { addProgram } from "../../reduxParts/reducers/programSlice";
+import { addProgram } from "../../ReduxParts/reducers/programSlice";
 import WorkoutItem from "../workout/WorkoutItem";
 
 const ProgramFormAdd = ()=>{

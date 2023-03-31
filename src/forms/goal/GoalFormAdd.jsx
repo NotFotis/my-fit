@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { formatDate } from "../../mappers/formatDate";
-import { addGoal } from "../../reduxParts/reducers/goalSlice";
+import { addGoal } from "../../ReduxParts/reducers/goalSlice";
 import ProgramItem from "../program/ProgramItem";
 
 const GoalFormAdd = ()=>{

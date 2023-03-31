@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router";
 import { removeObjectsById } from "../helpers/removeObjectsByid";
-import { selectGoalById } from "../reduxParts/reducers/goalSlice";
-import { selectProgramsByIds } from "../reduxParts/reducers/programSlice";
-import { selectWorkoutsByIds } from "../reduxParts/reducers/workoutSlice";
+import { selectGoalById } from "../ReduxParts/reducers/goalSlice";
+import { selectProgramsByIds } from "../ReduxParts/reducers/programSlice";
+import { selectWorkoutsByIds } from "../ReduxParts/reducers/workoutSlice";
 import {removeDuplicateObjects} from "../helpers/removeDuplicateObjects";
 import WorkoutItem from "../forms/workout/WorkoutItem";
 import { removeDuplicateNumbers } from "../helpers/removeDuplicateNumbers";

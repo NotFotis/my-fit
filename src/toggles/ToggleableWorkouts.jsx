@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import WorkoutItem from "../forms/workout/WorkoutItem"
-import { fetchWorkouts, selectWorkoutsByIds } from "../reduxParts/reducers/workoutSlice";
+import { fetchWorkouts, selectWorkoutsByIds } from "../ReduxParts/reducers/workoutSlice";
 
 const ToggleableWorkouts = ({workoutIds, toggle, index, workoutsPerProgram})=>{
     const [ids,setIds]=useState();

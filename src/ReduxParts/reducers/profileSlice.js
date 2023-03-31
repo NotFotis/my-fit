@@ -49,8 +49,8 @@ export const addProfile = createAsyncThunk("profile/addProfile", async (profile)
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-    //   'Authorization': 'Bearer ' + keycloak.token
-    'x-api-key':apiKey
+      'Authorization': 'Bearer ' + keycloak.token
+    // 'x-api-key':apiKey
     },
     body: JSON.stringify(profile),
   });
@@ -64,8 +64,8 @@ export const updateProfile = createAsyncThunk("profile/updateProfile", async (pr
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-    //   'Authorization': 'Bearer ' + keycloak.token
-    'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+    // 'x-api-key':apiKey
     },
     body: JSON.stringify(profile),
   });
@@ -79,8 +79,8 @@ export const deleteProfile = createAsyncThunk("profile/deleteProfile", async (id
     // headers: HeadersApi,
         headers:{
       "Content-Type": "application/json",
-    //   'Authorization': 'Bearer ' + keycloak.token
-    'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+    // 'x-api-key':apiKey
     },
   });
   const data = await response.json();

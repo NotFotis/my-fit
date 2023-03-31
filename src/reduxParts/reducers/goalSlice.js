@@ -51,8 +51,8 @@ export const addGoal = createAsyncThunk("goal/addGoal", async (goal) => {
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     },
     body: JSON.stringify(goal),
   });
@@ -66,8 +66,8 @@ export const updateGoal = createAsyncThunk("goal/updateGoal", async (goal) => {
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     },
     body: JSON.stringify(goal),
   });
@@ -81,8 +81,8 @@ export const deleteGoal = createAsyncThunk("goal/deleteGoal", async (id) => {
     // headers: HeadersApi,
     headers:{
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + keycloak.token
-      'x-api-key':apiKey
+       'Authorization': 'Bearer ' + keycloak.token
+      // 'x-api-key':apiKey
     }
   });
   const data = await response.json();

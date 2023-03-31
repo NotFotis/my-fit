@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router"
-import { selectProgramById, updateProgram } from "../../reduxParts/reducers/programSlice";
-import { selectWorkoutsByIds } from "../../reduxParts/reducers/workoutSlice";
+import { selectProgramById, updateProgram } from "../../ReduxParts/reducers/programSlice";
+import { selectWorkoutsByIds } from "../../ReduxParts/reducers/workoutSlice";
 import WorkoutItem from "../workout/WorkoutItem";
 
 const ProgramEdit = ()=>{

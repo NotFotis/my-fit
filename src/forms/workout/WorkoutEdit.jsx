@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router";
-import { selectExercisesByIds, selectTheRestErxercises } from "../../reduxParts/reducers/exerciseSlice";
-import { selectWorkoutById, updateWorkout } from "../../reduxParts/reducers/workoutSlice";
+import { selectExercisesByIds, selectTheRestErxercises } from "../../ReduxParts/reducers/exerciseSlice";
+import { selectWorkoutById, updateWorkout } from "../../ReduxParts/reducers/workoutSlice";
 import ExerciseItem from "../exercise/ExerciseItem";
 
 const WorkoutEdit = ()=>{

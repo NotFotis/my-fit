@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router"
 import ExerciseItem from "../forms/exercise/ExerciseItem";
-import { selectExercisesByIds } from "../reduxParts/reducers/exerciseSlice";
-import { selectGoalById } from "../reduxParts/reducers/goalSlice";
-import { selectProgramsByIds } from "../reduxParts/reducers/programSlice";
-import { selectWorkoutsByIds } from "../reduxParts/reducers/workoutSlice";
+import { selectExercisesByIds } from "../ReduxParts/reducers/exerciseSlice";
+import { selectGoalById } from "../ReduxParts/reducers/goalSlice";
+import { selectProgramsByIds } from "../ReduxParts/reducers/programSlice";
+import { selectWorkoutsByIds } from "../ReduxParts/reducers/workoutSlice";
 
 // programs,workouts
 //programs have workout ids, make an array of ids for each program

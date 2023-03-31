@@ -7,7 +7,7 @@ import Workout from './views/Workouts';
 import Program from './views/Programs';
 import { Provider} from 'react-redux';
 // import { Store } from '@reduxjs/toolkit';
-import store from './reduxParts/store';
+import store from './ReduxParts/store';
 import Exercise from './views/Exercise';
 
 import ExerciseGetAll from './forms/exercise/ExerciseGetAll';

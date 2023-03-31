@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router"
-import { fetchExercises } from "../../reduxParts/reducers/exerciseSlice";
-import { deleteWorkout, fetchWorkouts } from "../../reduxParts/reducers/workoutSlice";
+import { fetchExercises } from "../../ReduxParts/reducers/exerciseSlice";
+import { deleteWorkout, fetchWorkouts } from "../../ReduxParts/reducers/workoutSlice";
 import WorkoutItem from "./WorkoutItem";
 import './workout-style.css'
 

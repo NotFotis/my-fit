@@ -2,7 +2,7 @@ import './exercise-style.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { fetchExercises, selectExerciseById, updateExercise } from "../../reduxParts/reducers/exerciseSlice";
+import { fetchExercises, selectExerciseById, updateExercise } from "../../ReduxParts/reducers/exerciseSlice";
 const ExerciseEdit = ()=>{
     const dispatch = useDispatch();
     const navigate = useNavigate()

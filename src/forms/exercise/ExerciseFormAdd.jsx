@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { addExercise } from "../../reduxParts/reducers/exerciseSlice";
+import { addExercise } from "../../ReduxParts/reducers/exerciseSlice";
 
 const ExerciseFormAdd=(exerciseStructure)=>{
   const navigate= useNavigate()

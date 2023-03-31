@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router";
 import { isInArray } from "../../helpers/isInArray";
 import { formatDate } from "../../mappers/formatDate";
-import { selectGoalById, updateGoal } from "../../reduxParts/reducers/goalSlice";
-import { selectAllPrograms, selectProgramsByIds } from "../../reduxParts/reducers/programSlice";
-import { selectWorkoutsByIds } from "../../reduxParts/reducers/workoutSlice";
+import { selectGoalById, updateGoal } from "../../ReduxParts/reducers/goalSlice";
+import { selectAllPrograms, selectProgramsByIds } from "../../ReduxParts/reducers/programSlice";
+import { selectWorkoutsByIds } from "../../ReduxParts/reducers/workoutSlice";
 import ProgramItem from "../program/ProgramItem";
 import WorkoutItem from "../workout/WorkoutItem";
 
