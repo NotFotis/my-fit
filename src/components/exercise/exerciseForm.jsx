@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect, useState } from 'react';
-import { addExercise, getAllExercisesAsync } from '../../ReduxParts/exercise/exerciseSlice';
+import { addExercise, getAllExercisesAsync } from '../../reduxParts/exercise/exerciseSlice';
 import ExerciseListItem from './ExerciseListItem';
 
 const exerciseNameConfig = {

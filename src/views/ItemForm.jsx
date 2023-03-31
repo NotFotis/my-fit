@@ -5,8 +5,8 @@ import Input from "../form/Input";
 import Label from "../form/Label";
 import PopupForm from "../form/PopupForm";
 import { itemStructureToAttributes, mapPayload } from "../mappers/mapPayload";
-import dispatchCruncher from "../ReduxParts/dispatchCruncher";
-import { getAllExercisesAsync } from "../ReduxParts/exercise/exerciseSlice";
+import dispatchCruncher from "../reduxParts/dispatchCruncher";
+import { getAllExercisesAsync } from "../reduxParts/exercise/exerciseSlice";
 
 const ItemForm = ({item, itemStructure, formActions, itemChildStructure})=>{
     const [update,setUpdate]=useState(formActions.update);

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
-import { updateExerciseAsync } from '../../ReduxParts/exercise/exerciseSlice';
+import { updateExerciseAsync } from '../../reduxParts/exercise/exerciseSlice';
 
 const ExerciseListItem = ({exercise, handleAdd}) => {
   console.log(exercise);
